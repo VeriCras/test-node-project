@@ -5,5 +5,5 @@ const app = require('../app');
 
 // server
 app.listen(PORT, () => {
-    console.log('test');
+    console.log('Server start!');
 });

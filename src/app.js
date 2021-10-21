@@ -5,7 +5,7 @@ const app = express();
 const home = require('./routes/home');
 
 // app setting
-app.set('views', './views');
+app.set('views', '/src/views');
 app.set('view engine', 'ejs');
 
 // middleware
