@@ -4,21 +4,23 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Login</title>
-        <script type="text/javascript" src="/js/home/login.js" defer></script>
+        <title>Register</title>
+        <script type="text/javascript" src="/js/home/register.js" defer></script>
         <link rel="stylesheet" href="/css/home/login.css" />
     </head>
     <body>
         <div class="wrapper">
-            <div class="container">
-                <h1>Welcome</h1>
+            <div class="container"> 
+                <h1>Register</h1>
 
                 <form class="form">
+                    <input id="name" type="text" placeholder="Name" />
                     <input id="id" type="text" placeholder="UserID" />
                     <input id="pw" type="password" placeholder="Password" />
-                    <button type="submit" id="login-button">Login</button>
+                    <input id="pw-confirm" type="password" placeholder="Password Confirm" />
+                    <button type="button" id="register-button">Sign up</button>
                     <hr />
-                    Not register? <a href="/register">Create an account</a>
+                    <a href="/login">Already Member?</a>
                 </form>
             </div>
 
