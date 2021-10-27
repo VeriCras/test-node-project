@@ -13,8 +13,11 @@ class UserStorage {
         return userInfo;
     }
 
-    static getUsers(...fields) {
-        // const users = this.#users;
+    static #getUsers(data, isAll, fields) {
+        const users = JSON.parse(data);
+
+        if (isAll) return users;
+
         const newUsers = fields.reduce((newUsers, field) => {
             if (users.hasOwnProperty(field)) {
                 newUsers[field] = users[field];
@@ -23,6 +26,23 @@ class UserStorage {
         }, {});
 
         return newUsers;
+    }
+
+    static getUsers(isAll, ...fields) {
+        return fs
+            .readFile('./src/databases/vericras/user.json')
+            .then(data => {
+                return this.#getUsers(data, isAll, fields);
+            })
+            .catch(err => console.log);
+        // const newUsers = fields.reduce((newUsers, field) => {
+        //     if (users.hasOwnProperty(field)) {
+        //         newUsers[field] = users[field];
+        //     }
+        //     return newUsers;
+        // }, {});
+
+        // return newUsers;
     }
 
     static getUserInfo(id) {
@@ -34,12 +54,15 @@ class UserStorage {
             .catch(err => console.log);
     }
 
-    static save(userInfo) {
-        // const users = this.#users;
-        users.id.push(userInfo.userID);
+    static async save(userInfo) {
+        const users = await this.getUsers(true);
+        if (users.id.includes(userInfo.userId)) {
+            throw '이미 존재하는 아이디입니다.';
+        }
+        users.id.push(userInfo.userId);
         users.pw.push(userInfo.userPw);
         users.name.push(userInfo.userName);
-
+        fs.writeFile('./src/databases/vericras/user.json', JSON.stringify(users));
         return { success: true };
     }
 }
