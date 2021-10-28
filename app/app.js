@@ -2,9 +2,11 @@
 
 const express = require('express');
 const dotenv = require('dotenv');
-dotenv.config();
-
+const morgan = require('morgan');
+const accessLogStream = require('./src/config/log');
 const app = express();
+
+dotenv.config();
 
 // router
 const home = require('./src/routes/home');
@@ -17,6 +19,9 @@ app.set('view engine', 'ejs');
 app.use(express.static(`${__dirname}/src/public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+app.use(morgan('common', { stream: accessLogStream }));
+
 app.use('/', home);
 
 module.exports = app;
