@@ -1,4 +1,17 @@
 {
-    "id": ["vericras", "zizimoos"],
-    "pw": ["1234", "12345"]
+	"id": [
+		"vericras",
+		"zizimoos",
+		"vericra"
+	],
+	"pw": [
+		"1234",
+		"12345",
+		"1234"
+	],
+	"name": [
+		"백형주",
+		"azerc",
+		"홍길동"
+	]
 }

@@ -1,69 +1,32 @@
 'use strict';
 
-const fs = require('fs').promises;
+const db = require('../config/db');
 
 class UserStorage {
-    static #getUserInfo(data, id) {
-        const users = JSON.parse(data);
-        const idx = users.id.indexOf(id);
-        const userInfo = Object.keys(users).reduce((newUser, info) => {
-            newUser[info] = users[info][idx];
-            return newUser;
-        }, {});
-        return userInfo;
-    }
-
-    static #getUsers(data, isAll, fields) {
-        const users = JSON.parse(data);
-
-        if (isAll) return users;
-
-        const newUsers = fields.reduce((newUsers, field) => {
-            if (users.hasOwnProperty(field)) {
-                newUsers[field] = users[field];
-            }
-            return newUsers;
-        }, {});
-
-        return newUsers;
-    }
-
-    static getUsers(isAll, ...fields) {
-        return fs
-            .readFile('./src/databases/vericras/user.json')
-            .then(data => {
-                return this.#getUsers(data, isAll, fields);
-            })
-            .catch(err => console.log);
-        // const newUsers = fields.reduce((newUsers, field) => {
-        //     if (users.hasOwnProperty(field)) {
-        //         newUsers[field] = users[field];
-        //     }
-        //     return newUsers;
-        // }, {});
-
-        // return newUsers;
-    }
-
     static getUserInfo(id) {
-        return fs
-            .readFile('./src/databases/vericras/user.json')
-            .then(data => {
-                return this.#getUserInfo(data, id);
-            })
-            .catch(err => console.log);
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT * FROM users where id = ?;';
+            db.query(query, [id], (err, data) => {
+                if (err) reject(`${err}`);
+                resolve(data[0]);
+            });
+        });
     }
 
     static async save(userInfo) {
-        const users = await this.getUsers(true);
-        if (users.id.includes(userInfo.userId)) {
-            throw '이미 존재하는 아이디입니다.';
-        }
-        users.id.push(userInfo.userId);
-        users.pw.push(userInfo.userPw);
-        users.name.push(userInfo.userName);
-        fs.writeFile('./src/databases/vericras/user.json', JSON.stringify(users));
-        return { success: true };
+        return new Promise((resolve, reject) => {
+            const queryUser = 'SELECT * FROM users where id = ?;';
+            db.query(queryUser, [userInfo.userId], (err, data) => {
+                if (err) reject(`${err}`);
+                if (data[0]) resolve({ success: false, msg: '이미 존재하는 회원입니다.' });
+
+                const query = 'INSERT INTO users(id, name, password) VALUES(?, ?, ?);';
+                db.query(query, [userInfo.userId, userInfo.userName, userInfo.userPw], err => {
+                    if (err) reject(`${err}`);
+                    resolve({ success: true });
+                });
+            });
+        });
     }
 }
 
