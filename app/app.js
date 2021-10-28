@@ -2,8 +2,8 @@
 
 const express = require('express');
 const dotenv = require('dotenv');
-const morgan = require('morgan');
-const accessLogStream = require('./src/config/log');
+// const morgan = require('morgan');
+// const logger = require('./src/config/logger');
 const app = express();
 
 dotenv.config();
@@ -19,8 +19,8 @@ app.set('view engine', 'ejs');
 app.use(express.static(`${__dirname}/src/public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan('dev'));
-app.use(morgan('common', { stream: accessLogStream }));
+// app.use(morgan('tiny', { stream: logger.stream }));
+// app.use(morgan('dev'));
 
 app.use('/', home);
 

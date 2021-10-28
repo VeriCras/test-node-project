@@ -31,7 +31,8 @@ registerbtn.addEventListener('click', () => {
             if (res.success === true) {
                 location.href = '/login';
             } else {
-                alert(res.msg);
+                if (res.error) return alert(res.error);
+                else alert(res.msg);
             }
         })
         .catch(err => {
