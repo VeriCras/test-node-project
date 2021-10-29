@@ -1,6 +1,6 @@
 'use strict';
 
-const UserStorage = require('./UserStorage');
+import UserStorage from './UserStorage.mjs';
 
 class User {
     constructor(body) {
@@ -35,4 +35,4 @@ class User {
     }
 }
 
-module.exports = User;
+export default User;

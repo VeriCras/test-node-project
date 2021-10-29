@@ -1,8 +1,9 @@
 'use strict';
 
-const express = require('express');
+import express from 'express';
+import * as ctrl from './home.ctrl.mjs';
+
 const router = express.Router();
-const ctrl = require('./home.ctrl');
 
 // route
 router.get('/', ctrl.output.home);
@@ -12,4 +13,4 @@ router.get('/register', ctrl.output.register);
 router.post('/login', ctrl.process.login);
 router.post('/register', ctrl.process.register);
 
-module.exports = router;
+export default router;

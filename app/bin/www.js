@@ -1,8 +1,9 @@
 'use strict';
 
+import logger from '../src/config/logger.mjs';
+import app from '../app.mjs';
+
 const PORT = process.env.PORT || 3000;
-const logger = require('../src/config/logger');
-const app = require('../app');
 
 // server
 app.listen(PORT, () => {

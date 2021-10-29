@@ -1,7 +1,7 @@
 'use strict';
 
-const logger = require('../../config/logger');
-const User = require('../../models/User');
+import logger from '../../config/logger.mjs';
+import User from '../../models/User.mjs';
 
 const output = {
     home: (req, res) => {
@@ -57,7 +57,4 @@ const log = (response, url) => {
     }
 };
 
-module.exports = {
-    output,
-    process,
-};
+export { output, process };

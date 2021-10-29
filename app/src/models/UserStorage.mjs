@@ -1,6 +1,6 @@
 'use strict';
 
-const db = require('../config/db');
+import db from '../config/db.mjs';
 
 class UserStorage {
     static getUserInfo(id) {
@@ -30,4 +30,4 @@ class UserStorage {
     }
 }
 
-module.exports = UserStorage;
+export default UserStorage;
